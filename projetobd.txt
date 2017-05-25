@@ -1,0 +1,71 @@
+create database Exercicio01 ;
+
+use  Exercicio01;
+--drop table Cliente;
+
+create table Cliente (
+ID_Cliente int primary key ,
+ Nome_Cliente char (30),
+ Data_Nasc date);
+
+
+ create table Endereco (
+ ID_End int primary key, 
+ ID_Cliente int ,
+  Bairro nvarchar(30), 
+ Endereco nvarchar (30),
+  ID_Cidade int ,
+  foreign key (ID_Cliente) references Cliente(ID_Cliente)
+    );
+
+--drop table Cidade
+create table Cidade (
+ID_Cidade int primary key, 
+ID_Estado int  ,
+Nome_Cidade char (20)
+foreign key (ID_Estado) references Estado(ID_Estado)
+);
+--drop table Estado;
+create table Estado
+(ID_Estado int primary key, 
+Nome_Estado varchar (20)
+
+);
+
+insert into Cliente(ID_Cliente,Nome_Cliente,Data_Nasc) 
+values ('1', 'Maria palmeira','2011-04-05'),
+('2','Antonia nega','2000-05-05'),
+('3', 'Jose Antonio','1998-02-02');
+
+insert into Endereco (ID_End,ID_Cliente,Bairro,Endereco,ID_Cidade)
+values ('1','1','Cajaseiras','rua 155 casa 25','1'),
+('2','2','Itaoca','rua maria azul casa 125','2'),
+('3','3','Itapipoca','rua mil e tres casa 400','3');
+
+insert into Cidade (ID_Cidade,ID_Estado,Nome_Cidade)
+values ('1','1','Fortaleza'),
+('2','2','Caucaia'),
+('3','3','Juazeiro');
+
+insert into Estado (ID_Estado,Nome_Estado)
+values ('1','Ceara'),
+('2', 'Maracanau'),
+('3','Amapa');
+
+
+--INICIO--
+--A--------------JOIN
+    select c.Nome_Cliente,e.Endereco from Cliente c 
+join Endereco e ON c.ID_Cliente = e.ID_Cliente 
+--B--------------LEFT JOIN
+select c.Nome_Cliente,e.Endereco from Cliente c 
+left join Endereco e ON c.ID_Cliente = e.ID_Cliente 
+--C--------------RIGHT JOIN
+select c.Nome_Cliente,e.Endereco from Cliente c 
+right join Endereco e ON c.ID_Cliente = e.ID_Cliente
+order by c.Nome_Cliente 
+--D--------------FULL OUTER JOIN
+select c.Nome_Cliente,e.Endereco from Cliente c 
+full outer join Endereco e ON c.ID_Cliente = e.ID_Cliente 
+
+--FIM--
